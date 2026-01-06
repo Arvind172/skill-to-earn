@@ -13,37 +13,58 @@ function Tasks() {
     const data = await res.json();
     setTasks(data);
   };
+  const applyToTask = async (taskId) => {
+    if (!taskId) {
+      alert("Invalid task ID");
+      return;
+    }
 
-  
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(`http://localhost:5000/api/tasks/${taskId}/apply`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message);
+    } else {
+      alert("Applied successfully");
+    }
+  };
 
   return (
     <>
       <div className="tasks-header">
-      <h2>Available Tasks</h2>
-      <input type="text"  placeholder="Search Tasks" className="search-bar" />
-      <button className="search-button">Search</button>
+        <h2>Available Tasks</h2>
+        <input type="text" placeholder="Search Tasks" className="search-bar" />
+        <button className="search-button">Search</button>
       </div>
       <div className="Tasks">
-      {tasks.map((task) => (
-        <div
-          key={task.id}
-          className="Task-card"
-        >
-          <h3>{task.title}</h3>
-          <p>{task.description}</p>
-          <p><strong>Skills:</strong> {task.skills.join(", ")}</p>
+        {tasks.map((task) => (
+          <div key={task._id} className="Task-card">
+            <h3>{task.title}</h3>
+            <p>{task.description}</p>
+            <p>
+              <strong>Skills:</strong> {task.skills.join(", ")}
+            </p>
 
-          <button onClick={() => applyToTask(task.id)}>Apply</button>
+            <button onClick={() => applyToTask(task._id)}>Apply</button>
 
-          <p><strong>Applicants:</strong></p>
-          <ul>
-            {task.applicants.map((name, i) => (
-              <li key={i}>{name}</li>
-            ))}
-
-          </ul>
-        </div>
-      ))}
+            <p>
+              <strong>Applicants:</strong>
+            </p>
+            <ul>
+              {task.applicants.map((name, i) => (
+                <li key={i}>{name}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
     </>
   );

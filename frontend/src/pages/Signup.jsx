@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Signup({ setUser }) {
   const [name, setName] = useState("");
@@ -9,10 +9,15 @@ function Signup({ setUser }) {
   const [skills, setSkills] = useState("");
   const [error, setError] = useState("");
   const [role, setRole] = useState("freelancer");
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const handleSignup = async () => {
     setError("");
+
+    if (!name || !email || !password || !college || !skills) {
+      setError("Please fill in all fields");
+      return;
+    }
 
     const res = await fetch("http://localhost:5000/api/freelancers/signup", {
       method: "POST",
@@ -22,7 +27,10 @@ function Signup({ setUser }) {
         email,
         password,
         college,
-        skills: skills.split(",").map((s) => s.trim()),
+        skills: skills
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean), // 🔑 THIS IS IMPORTANT
         role,
       }),
     });
@@ -34,8 +42,10 @@ function Signup({ setUser }) {
       return;
     }
 
-    setUser(data);
-    localStorage.setItem("user", JSON.stringify(data));
+    setUser(data.user);
+    localStorage.setItem("user", JSON.stringify(data.user));
+    localStorage.setItem("token", data.token);
+
     navigate("/");
   };
 

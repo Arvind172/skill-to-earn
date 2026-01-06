@@ -1,10 +1,11 @@
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 function Login({ setUser }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  const navigate = useNavigate();
   const handleLogin = async () => {
     setError("");
 
@@ -21,8 +22,11 @@ function Login({ setUser }) {
       return;
     }
 
-    setUser(data); 
-    localStorage.setItem("user", JSON.stringify(data));
+    setUser(data.user);
+    localStorage.setItem("user", JSON.stringify(data.user));
+    localStorage.setItem("token", data.token);
+
+    navigate("/");
   };
 
   return (
