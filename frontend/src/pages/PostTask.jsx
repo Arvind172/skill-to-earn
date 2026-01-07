@@ -6,13 +6,17 @@ function PostTask() {
   const [skills, setSkills] = useState("");
 
   const addTask = async () => {
+    const token = localStorage.getItem("token");
     await fetch("http://localhost:5000/api/tasks", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({
         title,
         description,
-        skills: skills.split(",").map(s => s.trim()),
+        skills: skills.split(",").map((s) => s.trim()),
       }),
     });
 

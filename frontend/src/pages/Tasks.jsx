@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Tasks.css";
 
-function Tasks() {
+function Tasks({ user }) {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
@@ -53,16 +53,9 @@ function Tasks() {
               <strong>Skills:</strong> {task.skills.join(", ")}
             </p>
 
-            <button onClick={() => applyToTask(task._id)}>Apply</button>
-
-            <p>
-              <strong>Applicants:</strong>
-            </p>
-            <ul>
-              {task.applicants.map((name, i) => (
-                <li key={i}>{name}</li>
-              ))}
-            </ul>
+            {user?.role === "freelancer" && (
+                <button onClick={() => applyToTask(task._id)}>Apply</button>
+              )}
           </div>
         ))}
       </div>

@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const PORT = 5000;
 
 const app = express();
 app.use(cors());
@@ -11,6 +12,7 @@ app.use(express.json());
 
 const Freelancer = require("./models/Freelancer.model");
 const Task = require("./models/Task.model");
+const Chat = require("./models/chat.model");
 
 function auth(req, res, next) {
   const authHeader = req.headers.authorization;
@@ -130,9 +132,18 @@ app.get("/api/tasks", async (req, res) => {
 });
 
 app.post("/api/tasks", auth, role("recruiter"), async (req, res) => {
-  const task = new Task(req.body);
-  await task.save();
-  res.status(201).json(task);
+  try {
+    const task = new Task({
+      ...req.body,
+      createdBy: req.user.id,
+    });
+
+    await task.save();
+    res.status(201).json(task);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to create task" });
+  }
 });
 
 app.post("/api/tasks/:id/apply", auth, role("freelancer"), async (req, res) => {
@@ -156,12 +167,144 @@ app.post("/api/tasks/:id/apply", auth, role("freelancer"), async (req, res) => {
   res.json({ message: "Application successful" });
 });
 
+app.get("/api/recruiter/tasks", auth, role("recruiter"), async (req, res) => {
+  const tasks = await Task.find({ createdBy: req.user.id }).populate(
+    "applicants",
+    "name email"
+  );
+
+  res.json(tasks);
+});
+const http = require("http");
+const { Server } = require("socket.io");
+
+const server = http.createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+  },
+});
+
+app.post("/api/chats/start", auth, async (req, res) => {
+  const { taskId, freelancerId } = req.body;
+
+  const chat = await Chat.findOne({
+    task: taskId,
+    recruiter: req.user.id,
+    freelancer: freelancerId,
+  });
+
+  if (chat) {
+    return res.json(chat);
+  }
+
+  const newChat = new Chat({
+    task: taskId,
+    recruiter: req.user.id,
+    freelancer: freelancerId,
+    messages: [],
+  });
+
+  await newChat.save();
+  res.json(newChat);
+});
+
+app.get("/api/chats/:id", auth, async (req, res) => {
+  const chat = await Chat.findById(req.params.id).populate(
+    "messages.sender",
+    "name"
+  );
+
+  if (!chat) {
+    return res.status(404).json({ message: "Chat not found" });
+  }
+
+  // only participants allowed
+  if (
+    chat.recruiter.toString() !== req.user.id &&
+    chat.freelancer.toString() !== req.user.id
+  ) {
+    return res.status(403).json({ message: "Forbidden" });
+  }
+
+  res.json(chat);
+});
+
+io.on("connection", (socket) => {
+  socket.on("joinChat", (chatId) => {
+    socket.join(chatId);
+  });
+
+  socket.on("sendMessage", async ({ chatId, senderId, text }) => {
+    const chat = await Chat.findById(chatId);
+    if (!chat) return;
+
+    const isParticipant =
+      chat.recruiter.toString() === senderId ||
+      chat.freelancer.toString() === senderId;
+
+    if (!isParticipant) return;
+
+    chat.messages.push({ sender: senderId, text });
+    await chat.save();
+
+    io.to(chatId).emit("newMessage", {
+      sender: senderId,
+      text,
+      createdAt: new Date(),
+    });
+  });
+});
+app.get("/api/freelancer/chats", auth, role("freelancer"), async (req, res) => {
+  const chats = await Chat.find({
+    freelancer: req.user.id,
+  })
+    .populate("task", "title")
+    .populate("recruiter", "name email")
+    .sort({ updatedAt: -1 });
+
+  res.json(chats);
+});
+app.get("/api/recruiter/chats", auth, role("recruiter"), async (req, res) => {
+  try {
+    const chats = await Chat.find({
+      recruiter: req.user.id,
+    })
+      .populate("task", "title")
+      .populate("freelancer", "name email")
+      .sort({ updatedAt: -1 });
+
+    res.json(chats);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to fetch chats" });
+  }
+});
+app.get(
+  "/api/freelancer/applied-tasks",
+  auth,
+  role("freelancer"),
+  async (req, res) => {
+    try {
+      const tasks = await Task.find({
+        applicants: req.user.id,
+      }).populate("createdBy", "name email");
+
+      res.json(tasks);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Failed to fetch applied tasks" });
+    }
+  }
+);
+
+server.listen(PORT, () => {
+  console.log(`Server running on ${PORT}`);
+});
+
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error(err));
-
-const PORT = 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});

@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import "./Navbar.css";
+import { useNavigate } from "react-router-dom";
 
 function Navbar({ user, setUser }) {
+  const navigate = useNavigate();
   return (
     <nav className="navbar">
       <Link to="/" className="logo">
@@ -9,10 +11,23 @@ function Navbar({ user, setUser }) {
       </Link>
 
       <div className="nav-links">
-        <Link to="/freelancers">Freelancers</Link>
-        <Link to="/tasks">Tasks</Link>
+        {user?.role === "recruiter" && (
+          <Link to="/freelancers">Freelancers</Link>
+        )}
+
+        {user?.role === "freelancer" && <Link to="/tasks">Tasks</Link>}
 
         {user?.role === "recruiter" && <Link to="/post-task">Post Task</Link>}
+        {user?.role === "recruiter" && (
+          <Link to="/recruiter/tasks">My Tasks</Link>
+        )}
+        {user?.role === "freelancer" && (
+          <Link to="/freelancer/chats">My Chats</Link>
+        )}
+        {user?.role === "recruiter" && <Link to="/recruiter/chats">Inbox</Link>}
+        {user?.role === "freelancer" && (
+          <Link to="/freelancer/applied-tasks">Applied Tasks</Link>
+        )}
       </div>
 
       <div className="nav-auth">
@@ -32,6 +47,7 @@ function Navbar({ user, setUser }) {
                 setUser(null);
                 localStorage.removeItem("user");
                 localStorage.removeItem("token");
+                navigate("/");
               }}
             >
               Logout
