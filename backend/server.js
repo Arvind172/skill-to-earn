@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 const app = express();
 app.use(cors());
