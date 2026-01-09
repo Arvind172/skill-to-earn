@@ -1,4 +1,4 @@
-console.log("🔥 THIS IS THE ACTIVE SERVER FILE 🔥");
+
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
