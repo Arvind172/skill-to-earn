@@ -25,19 +25,23 @@ function Signup({ setUser }) {
   const handleSignup = async () => {
     setError("");
 
-    if (!name || !email || !password || !bio) {
-      setError("Please fill in all required fields");
+    if (!name || !email || !password) {
+      setError("Please fill in required fields");
       return;
     }
 
-    if (role === "freelancer" && (!college || !skills)) {
-      setError("Please fill in all required fields");
-      return;
+    if (role === "freelancer") {
+      if (!college || !skills || !bio) {
+        setError("Please fill in all freelancer fields");
+        return;
+      }
     }
 
-    if (role === "recruiter" && !company) {
-      setError("Please fill in all required fields");
-      return;
+    if (role === "recruiter") {
+      if (!company || !bio) {
+        setError("Please fill in all recruiter fields");
+        return;
+      }
     }
 
     const payload =
@@ -72,6 +76,7 @@ function Signup({ setUser }) {
     const data = await res.json();
 
     if (!res.ok) {
+      console.log("BACKEND ERROR MESSAGE:", data);
       setError(data.message || "Signup failed");
       return;
     }

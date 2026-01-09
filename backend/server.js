@@ -1,3 +1,4 @@
+console.log("🔥 THIS IS THE ACTIVE SERVER FILE 🔥");
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -43,14 +44,27 @@ function role(requiredRole) {
 
 app.post("/api/freelancers/signup", async (req, res) => {
   try {
-    const { name, email, password, college, skills, role,bio } = req.body;
+    const { name, email, password, role, college, skills, company, bio } =
+      req.body;
 
-    if (!name || !email || !password || !college || !skills || !role || !bio) {
-      return res.status(400).json({ message: "All fields required" });
+    if (!name || !email || !password || !role) {
+      return res.status(400).json({ message: "Missing required fields" });
     }
 
     if (!["freelancer", "recruiter"].includes(role)) {
       return res.status(400).json({ message: "Invalid role" });
+    }
+
+    if (role === "freelancer") {
+      if (!college || !skills || skills.length === 0 || !bio) {
+        return res.status(400).json({ message: "Missing freelancer fields" });
+      }
+    }
+
+    if (role === "recruiter") {
+      if (!company || !bio) {
+        return res.status(400).json({ message: "Missing recruiter fields" });
+      }
     }
 
     const existingUser = await Freelancer.findOne({ email });
@@ -60,16 +74,24 @@ app.post("/api/freelancers/signup", async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const freelancer = new Freelancer({
+    const userData = {
       name,
       email,
       password: hashedPassword,
-      college,
-      skills,
       role,
       bio,
-    });
+    };
 
+    if (role === "freelancer") {
+      userData.college = college;
+      userData.skills = skills;
+    }
+
+    if (role === "recruiter") {
+      userData.company = company;
+    }
+
+    const freelancer = new Freelancer(userData);
     await freelancer.save();
 
     const token = jwt.sign(
@@ -88,6 +110,7 @@ app.post("/api/freelancers/signup", async (req, res) => {
       },
     });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Signup failed" });
   }
 });
@@ -222,7 +245,6 @@ app.get("/api/chats/:id", auth, async (req, res) => {
     return res.status(404).json({ message: "Chat not found" });
   }
 
- 
   if (
     chat.recruiter.toString() !== req.user.id &&
     chat.freelancer.toString() !== req.user.id
