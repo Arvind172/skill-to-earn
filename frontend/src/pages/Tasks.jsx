@@ -38,7 +38,7 @@ function Tasks({ user }) {
   };
 
   return (
-    <>
+    <div className="Tasks-page">
       <div className="tasks-header">
         <h2>Available Tasks</h2>
         <input type="text" placeholder="Search Tasks" className="search-bar" />
@@ -59,7 +59,7 @@ function Tasks({ user }) {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 }
 

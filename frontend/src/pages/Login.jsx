@@ -30,24 +30,31 @@ function Login({ setUser }) {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div className="signup-page">
+      <div className="signup-card">
+        <h2 className="signup-title">Login</h2>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && <p className="signup-error">{error}</p>}
 
-      <input
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+        <input
+          className="signup-input"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-      <button onClick={handleLogin}>Login</button>
+        <input
+          className="signup-input"
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <button className="signup-button" onClick={handleLogin}>
+          Login
+        </button>
+      </div>
     </div>
   );
 }

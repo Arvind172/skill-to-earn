@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { io } from "socket.io-client";
+import "./Chat.css";
 
 const socket = io("http://localhost:5000");
 
@@ -48,17 +49,42 @@ function Chat({ user }) {
   if (!chat) return <p>Loading...</p>;
 
   return (
-    <div>
-      <h2>Chat</h2>
-
-      {chat.messages.map((m, i) => (
-        <div key={i}>
-          <strong>{m.sender.name || "You"}:</strong> {m.text}
+    <div className="chat-page">
+      <div className="chat-box">
+        <div className="chat-header">
+          <h3>Chat</h3>
         </div>
-      ))}
 
-      <input value={message} onChange={(e) => setMessage(e.target.value)} />
-      <button onClick={sendMessage}>Send</button>
+        <div className="chat-messages">
+          {chat.messages.map((m, i) => {
+            const senderId =
+              typeof m.sender === "string" ? m.sender : m.sender?._id;
+
+            const isMe = senderId === user?.id;
+
+            return (
+              <div
+                key={i}
+                className={`chat-bubble ${isMe ? "chat-right" : "chat-left"}`}
+              >
+                <p className="chat-text">{m.text}</p>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="chat-input-area">
+          <input
+            className="chat-input"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Type a message..."
+          />
+          <button className="chat-send-button" onClick={sendMessage}>
+            Send
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

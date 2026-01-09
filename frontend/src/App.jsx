@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import "./App.css";
 
 import Home from "./pages/Home";
 import Freelancers from "./pages/Freelancers";
@@ -29,7 +30,7 @@ function App() {
   return (
     <>
       <Navbar user={user} setUser={setUser} />
-
+      <div className="app-layout">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/freelancers" element={<Freelancers />} />
@@ -55,6 +56,7 @@ function App() {
         <Route path="/recruiter/chats" element={<RecruiterChats />} />
         <Route path="/freelancer/applied-tasks" element={<AppliedTasks />} />
       </Routes>
+      </div>
     </>
   );
 }

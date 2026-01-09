@@ -23,32 +23,31 @@ function FreelancerChats() {
   };
 
   return (
-    <div>
-      <h2>My Chats</h2>
+    <div className="inbox-page">
+    <h2 className="inbox-title">Recruiter Inbox</h2>
 
-      {chats.length === 0 && <p>No chats yet</p>}
+    {chats.length === 0 && (
+      <p className="inbox-empty">No conversations yet</p>
+    )}
 
-      {chats.map((chat) => (
-        <div
-          key={chat._id}
-          style={{
-            border: "1px solid #ccc",
-            padding: "10px",
-            marginBottom: "10px",
-            cursor: "pointer",
-          }}
-          onClick={() => navigate(`/chat/${chat._id}`)}
-        >
-          <p>
-            <strong>Task:</strong> {chat.task.title}
-          </p>
-          <p>
-            <strong>Recruiter:</strong> {chat.recruiter.name}
-          </p>
-        </div>
-      ))}
-    </div>
-  );
+    {chats.map((chat) => (
+      <div
+        key={chat._id}
+        className="inbox-card"
+        onClick={() => navigate(`/chat/${chat._id}`)}
+      >
+        <p className="inbox-line">
+          <strong>Task:</strong> {chat.task.title}
+        </p>
+        <p className="inbox-line">
+          <strong>Freelancer:</strong> {chat.freelancer.name}
+        </p>
+      </div>
+    ))}
+  </div>
+);
+    
+  
 }
 
 export default FreelancerChats;

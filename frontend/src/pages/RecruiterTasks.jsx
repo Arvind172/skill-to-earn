@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import "./RecruiterTasks.css";
 
 function RecruiterTasks({ user }) {
   const [tasks, setTasks] = useState([]);
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMyTasks = async () => {
@@ -29,8 +29,6 @@ function RecruiterTasks({ user }) {
     return <h2>Access Denied</h2>;
   }
   const startChat = async (taskId, freelancerId) => {
-   
-
     const token = localStorage.getItem("token");
 
     const res = await fetch("http://localhost:5000/api/chats/start", {
@@ -47,48 +45,43 @@ function RecruiterTasks({ user }) {
   };
 
   return (
-    <div>
-      <h1>My Posted Tasks</h1>
+    <div className="recruiter-tasks-page">
+      <h1 className="h1">My Posted Tasks</h1>
+      <div className="tasks-container">
+        {tasks.length === 0 && <p>No tasks posted yet.</p>}
 
-      {tasks.length === 0 && <p>No tasks posted yet.</p>}
+        {tasks.map((task) => (
+          <div key={task._id} className="card">
+            <h3 className="card-title">{task.title}</h3>
+            <p>{task.description}</p>
+            <div className="skills">
+              <strong>Skills:</strong> {task.skills.join(", ")}
+            </div>
 
-      {tasks.map((task) => (
-        <div
-          key={task._id}
-          style={{
-            border: "1px solid #ccc",
-            padding: 12,
-            marginBottom: 12,
-          }}
-        >
-          <h3>{task.title}</h3>
-          <p>{task.description}</p>
-          <p>
-            <strong>Skills:</strong> {task.skills.join(", ")}
-          </p>
+            <h4 className="section-title">Applicants</h4>
 
-          <h4>Applicants</h4>
-
-          {(task.applicants || []).length === 0 ? (
-            <p>No applicants yet</p>
-          ) : (
-            <ul>
-              {task.applicants.map((applicant) => (
-                <li key={applicant._id}>
-                  {applicant.name} ({applicant.email})
-                  <button
-                    onClick={() => {
-                      startChat(task._id, applicant._id);
-                    }}
-                  >
-                    Contact
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      ))}
+            {(task.applicants || []).length === 0 ? (
+              <p>No applicants yet</p>
+            ) : (
+              <ul>
+                {task.applicants.map((applicant) => (
+                  <li key={applicant._id}>
+                    {applicant.name} ({applicant.email})
+                    <button
+                      className="btn"
+                      onClick={() => {
+                        startChat(task._id, applicant._id);
+                      }}
+                    >
+                      Contact
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

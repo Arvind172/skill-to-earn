@@ -6,6 +6,7 @@ const FreelancerSchema = new mongoose.Schema({
     skills: { type: [String], required: true },
     college: { type: String, required: true },
     role: { type: String, required: true,default:"freelancer" },
+    bio: { type: String }
 }, { timestamps: true });
 
 module.exports = mongoose.model("Freelancer", FreelancerSchema);

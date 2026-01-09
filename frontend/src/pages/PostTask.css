@@ -1,0 +1,60 @@
+.post-task-page {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+  max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.post-task-title {
+  font-size: 26px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 24px;
+}
+
+.post-task-input,
+.post-task-textarea {
+  width: 100%;
+  max-width: 520px;
+  box-sizing: border-box;
+  display: block;
+  padding: 10px 14px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #cbd5f5;
+  outline: none;
+  font-family: system-ui, sans-serif;
+  margin-bottom: 16px;
+}
+
+.post-task-input:focus,
+.post-task-textarea:focus {
+  border-color: #2563eb;
+}
+
+.post-task-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.post-task-button {
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.post-task-button:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.post-task-button:active {
+  transform: translateY(0);
+}

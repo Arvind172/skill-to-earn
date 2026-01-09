@@ -1,46 +1,102 @@
-.tasks-header {
-  text-align: center;
+.Tasks-page {
+  padding: 40px 20px;
+ background: linear-gradient(135deg, #f5f7fa, #e4ecf7);
+  min-height: 100vh;
+}
 
-  margin: 0 auto;
+
+.tasks-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
 }
-.h2 {
-  margin-top: 20px;
-  margin-bottom: 20px;
+
+.tasks-header h2 {
+  font-size: 26px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-right: auto;
 }
-.search-button {
-  margin-left: 10px;
-  margin-top: 15px;
-  margin-bottom: 20px;
-  padding: 6px 12px;
-  font-size: 16px;
-  border: none;
+
+.search-bar {
+  padding: 8px 12px;
+  border: 1px solid #cbd5f5;
   border-radius: 6px;
-  background-color: purple;
-  color: white;
+  font-size: 14px;
+  width: 220px;
+  outline: none;
+}
+
+.search-bar:focus {
+  border-color: #2563eb;
+}
+
+.search-button {
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
 }
-.search-bar {
-  margin-left: 20px;
-  margin-top: 15px;
-  margin-bottom: 20px;
-  padding: 5px;
-  width: 300px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+
+.search-button:hover {
+  background-color: #1d4ed8;
 }
+
 .Tasks {
-  display: flex;
-  flex-wrap: wrap;
-  margin-left: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 24px;
 }
 
 .Task-card {
-  display: block;
-  border: 2px solid black;
-  margin-bottom: 30px;
-  padding: 6px 10px;
-  width: 400px;
-  margin-left: 30px;
-  border-radius: 10px;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+.Task-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #020617;
+}
+
+.Task-card p {
+  font-size: 14px;
+  color: #475569;
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.Task-card button {
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.Task-card button:hover {
+  background-color: #1d4ed8;
+}
+
+@media (max-width: 600px) {
+  .tasks-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-bar {
+    width: 100%;
+  }
 }

@@ -1,0 +1,67 @@
+.applied-tasks-page {
+  padding: 24px;
+  background: linear-gradient(135deg, #f5f7fa, #e4ecf7);
+  padding-bottom:205px;
+  
+}
+
+.applied-tasks-title {
+  font-size: 26px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 20px;
+}
+
+.applied-tasks-empty {
+  font-size: 14px;
+  color: #64748b;
+}
+
+.applied-tasks-list {
+  display: flex;
+  flex-wrap: wrap;  
+  
+  gap: 16px;
+}
+
+.applied-task-card {
+ width: 400px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+
+.applied-task-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #020617;
+}
+
+.applied-task-description {
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.applied-task-recruiter {
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.applied-task-button {
+  align-self: flex-start;
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 6px;
+}
+
+.applied-task-button:hover {
+  background-color: #1d4ed8;
+}

@@ -43,9 +43,9 @@ function role(requiredRole) {
 
 app.post("/api/freelancers/signup", async (req, res) => {
   try {
-    const { name, email, password, college, skills, role } = req.body;
+    const { name, email, password, college, skills, role,bio } = req.body;
 
-    if (!name || !email || !password || !college || !skills || !role) {
+    if (!name || !email || !password || !college || !skills || !role || !bio) {
       return res.status(400).json({ message: "All fields required" });
     }
 
@@ -67,6 +67,7 @@ app.post("/api/freelancers/signup", async (req, res) => {
       college,
       skills,
       role,
+      bio,
     });
 
     await freelancer.save();
@@ -221,7 +222,7 @@ app.get("/api/chats/:id", auth, async (req, res) => {
     return res.status(404).json({ message: "Chat not found" });
   }
 
-  // only participants allowed
+ 
   if (
     chat.recruiter.toString() !== req.user.id &&
     chat.freelancer.toString() !== req.user.id

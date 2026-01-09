@@ -1,0 +1,97 @@
+/* Full page center */
+.signup-page {
+  min-height: 85vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #f5f7fa, #e4ecf7);
+
+}
+
+/* Card */
+.signup-card {
+  width: 400px;
+  max-width: 450px;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 11px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Title */
+.signup-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+/* Error */
+.signup-error {
+  background: #ffecec;
+  color: #d8000c;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Inputs & select */
+.signup-input,
+.signup-select,
+.signup-textarea {
+  width: 375px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #dcdcdc;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.signup-textarea {
+  resize: none;
+  min-height: 90px;
+}
+
+/* Focus state */
+.signup-input:focus,
+.signup-select:focus,
+.signup-textarea:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+/* Button */
+.signup-button {
+  margin-top: 10px;
+  padding: 14px;
+  background: #4f46e5;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.1s;
+}
+
+.signup-button:hover {
+  background: #4338ca;
+  box-shadow: 0 10px 20px rgba(79, 70, 229, 0.25);
+}
+
+.signup-button:active {
+  transform: translateY(1px);
+}
+
+/* Mobile spacing */
+@media (max-width: 480px) {
+  .signup-card {
+    padding: 24px;
+  }
+}

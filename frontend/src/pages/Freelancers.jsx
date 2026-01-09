@@ -15,11 +15,14 @@ function Freelancers() {
   };
 
   return (
-    <>
+    <div className="freelancers-page">
     <div className="freelancers-header">
+      <div className="header-content">
       <h2 className="h2">Student Freelancers</h2>
       <input type="text"  placeholder="Search freelancers" className="search-bar" />
+      
       <button className="search-button">Search</button>
+      </div>
     </div>
     <div className="Freelancers">
       {freelancers.map((f) => (
@@ -35,7 +38,7 @@ function Freelancers() {
         </div>
       ))}
       </div>
-    </>
+    </div>
   );
 }
 
