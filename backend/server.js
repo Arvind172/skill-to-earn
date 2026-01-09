@@ -12,7 +12,7 @@ app.use(express.json());
 
 const Freelancer = require("./models/Freelancer.model");
 const Task = require("./models/Task.model");
-const Chat = require("./models/chat.model");
+const Chat = require("./models/Chat.model");
 
 function auth(req, res, next) {
   const authHeader = req.headers.authorization;
