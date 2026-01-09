@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./PostTask.css";
+import { API_URL } from "../config";
 function PostTask() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -7,7 +8,7 @@ function PostTask() {
 
   const addTask = async () => {
     const token = localStorage.getItem("token");
-    await fetch("http://localhost:5000/api/tasks", {
+    await fetch(`${API_URL}/api/tasks`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

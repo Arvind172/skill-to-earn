@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AppliedTasks.css";
+import { API_URL } from "../config";
 
 function AppliedTasks() {
   const [tasks, setTasks] = useState([]);
@@ -14,7 +15,7 @@ function AppliedTasks() {
     const token = localStorage.getItem("token");
 
     const res = await fetch(
-      "http://localhost:5000/api/freelancer/applied-tasks",
+      `${API_URL}/api/freelancer/applied-tasks`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

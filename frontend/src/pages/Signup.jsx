@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Signup.css";
+import { API_URL } from "../config";
 
 function Signup({ setUser }) {
   const [name, setName] = useState("");
@@ -62,7 +63,7 @@ function Signup({ setUser }) {
             role,
           };
 
-    const res = await fetch("http://localhost:5000/api/freelancers/signup", {
+    const res = await fetch(`${API_URL}/api/freelancers/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),

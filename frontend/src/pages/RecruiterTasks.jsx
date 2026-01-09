@@ -10,7 +10,7 @@ function RecruiterTasks({ user }) {
     const fetchMyTasks = async () => {
       const token = localStorage.getItem("token");
 
-      const res = await fetch("http://localhost:5000/api/recruiter/tasks", {
+      const res = await fetch("${api_url}/api/recruiter/tasks", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -31,7 +31,7 @@ function RecruiterTasks({ user }) {
   const startChat = async (taskId, freelancerId) => {
     const token = localStorage.getItem("token");
 
-    const res = await fetch("http://localhost:5000/api/chats/start", {
+    const res = await fetch(`${API_URL}/api/chats/start`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

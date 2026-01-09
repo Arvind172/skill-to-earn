@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Tasks.css";
+import { API_URL } from "../config";
 
 function Tasks({ user }) {
   const [tasks, setTasks] = useState([]);
@@ -9,7 +10,7 @@ function Tasks({ user }) {
   }, []);
 
   const fetchTasks = async () => {
-    const res = await fetch("http://localhost:5000/api/tasks");
+    const res = await fetch(`${API_URL}/api/tasks`);
     const data = await res.json();
     setTasks(data);
   };
@@ -21,7 +22,7 @@ function Tasks({ user }) {
 
     const token = localStorage.getItem("token");
 
-    const res = await fetch(`http://localhost:5000/api/tasks/${taskId}/apply`, {
+    const res = await fetch(`${API_URL}/api/tasks/${taskId}/apply`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

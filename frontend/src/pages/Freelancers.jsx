@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Freelancers.css";
+import { API_URL } from "../config";
 
 function Freelancers() {
   const [freelancers, setFreelancers] = useState([]);
@@ -9,7 +10,7 @@ function Freelancers() {
   }, []);
 
   const fetchFreelancers = async () => {
-    const res = await fetch("http://localhost:5000/api/freelancers");
+    const res = await fetch(`${API_URL}/api/freelancers`);
     const data = await res.json();
     setFreelancers(data);
   };

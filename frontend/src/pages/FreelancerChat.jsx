@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../config";
 
 function FreelancerChats() {
   const [chats, setChats] = useState([]);
@@ -12,7 +13,7 @@ function FreelancerChats() {
   const fetchChats = async () => {
     const token = localStorage.getItem("token");
 
-    const res = await fetch("http://localhost:5000/api/freelancer/chats", {
+    const res = await fetch(`${API_URL}/api/freelancer/chats`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -46,7 +47,7 @@ function FreelancerChats() {
     ))}
   </div>
 );
-    
+
   
 }
 

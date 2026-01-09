@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import "./Chat.css";
+import { API_URL } from "../config";
 
-const socket = io("http://localhost:5000");
+const socket = io(API_URL);
+
 
 function Chat({ user }) {
   const { id } = useParams();
@@ -27,7 +29,7 @@ function Chat({ user }) {
   const fetchChat = async () => {
     const token = localStorage.getItem("token");
 
-    const res = await fetch(`http://localhost:5000/api/chats/${id}`, {
+    const res = await fetch(`${API_URL}/api/chats/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
