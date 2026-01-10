@@ -20,21 +20,46 @@
   margin-top: 24px;
 }
 
-.primary-btn {
-  background: purple;
-  font-size: 35px;
-  text-decoration: none;
-  color: white;
-  padding: 12px 20px;
-  border-radius: 6px;
-  margin-right: 12px;
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 32px;
 }
 
-.secondary-btn {
-  border: 1px solid #392a48;
-  font-size: 35px;
-  text-decoration: none;
-  color: #392a48;
-  padding: 12px 20px;   
-  border-radius: 6px;
+/* Primary button (purple filled) */
+.btn-primary {
+  background: linear-gradient(135deg, #6a00ff, #8f2bff);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(106, 0, 255, 0.25);
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(106, 0, 255, 0.35);
+}
+
+/* Secondary button (outlined) */
+.btn-secondary {
+  background: transparent;
+  color: #2c2c2c;
+  border: 2px solid #2c2c2c;
+  padding: 14px 28px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: #2c2c2c;
+  color: white;
+  transform: translateY(-2px);
 }

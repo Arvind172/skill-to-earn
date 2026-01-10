@@ -1,6 +1,8 @@
 import "./Home.css";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const navigate = useNavigate();
   return (
     <section className="hero">
       <h1>Hire College Talent. Get Work Done.</h1>
@@ -10,8 +12,16 @@ function Home() {
       </p>
 
       <div className="hero-actions">
-        <a href="/tasks" className="primary-btn">Browse Tasks</a>
-        <a href="/freelancers" className="secondary-btn">Find Freelancers</a>
+        <button className="btn-primary" onClick={() => navigate("/tasks")}>
+          Browse Tasks
+        </button>
+
+        <button
+          className="btn-secondary"
+          onClick={() => navigate("/freelancers")}
+        >
+          Find Freelancers
+        </button>
       </div>
     </section>
   );
