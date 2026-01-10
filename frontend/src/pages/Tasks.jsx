@@ -4,6 +4,7 @@ import { API_URL } from "../config";
 
 function Tasks({ user }) {
   const [tasks, setTasks] = useState([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     fetchTasks();
@@ -14,6 +15,7 @@ function Tasks({ user }) {
     const data = await res.json();
     setTasks(data);
   };
+
   const applyToTask = async (taskId) => {
     if (!taskId) {
       alert("Invalid task ID");
@@ -38,15 +40,30 @@ function Tasks({ user }) {
     }
   };
 
+  const filteredTasks = tasks.filter((task) => {
+    const query = search.toLowerCase();
+
+    return (
+      task.title.toLowerCase().includes(query) ||
+      task.skills.some((skill) => skill.toLowerCase().includes(query))
+    );
+  });
+
   return (
     <div className="Tasks-page">
       <div className="tasks-header">
         <h2>Available Tasks</h2>
-        <input type="text" placeholder="Search Tasks" className="search-bar" />
-        <button className="search-button">Search</button>
+        <input
+          type="text"
+          placeholder="Search tasks"
+          className="search-bar"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
       </div>
+
       <div className="Tasks">
-        {tasks.map((task) => (
+        {filteredTasks.map((task) => (
           <div key={task._id} className="Task-card">
             <h3>{task.title}</h3>
             <p>{task.description}</p>
@@ -55,8 +72,8 @@ function Tasks({ user }) {
             </p>
 
             {user?.role === "freelancer" && (
-                <button onClick={() => applyToTask(task._id)}>Apply</button>
-              )}
+              <button onClick={() => applyToTask(task._id)}>Apply</button>
+            )}
           </div>
         ))}
       </div>

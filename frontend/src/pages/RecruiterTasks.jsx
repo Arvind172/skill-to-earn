@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./RecruiterTasks.css";
+ import { API_URL } from "../config";
+
 
 function RecruiterTasks({ user }) {
   const [tasks, setTasks] = useState([]);
@@ -10,7 +12,7 @@ function RecruiterTasks({ user }) {
     const fetchMyTasks = async () => {
       const token = localStorage.getItem("token");
 
-      const res = await fetch("${api_url}/api/recruiter/tasks", {
+      const res = await fetch(`${API_URL}/api/recruiter/tasks`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

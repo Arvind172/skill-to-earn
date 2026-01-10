@@ -6,7 +6,7 @@
 
 
 .tasks-header {
-  display: flex;
+  text-align: center;
   align-items: center;
   gap: 12px;
   margin-bottom: 28px;

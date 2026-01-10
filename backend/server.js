@@ -1,4 +1,3 @@
-
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -146,7 +145,8 @@ app.post("/api/freelancers/login", async (req, res) => {
 });
 
 app.get("/api/freelancers", async (req, res) => {
-  const freelancers = await Freelancer.find();
+  const freelancers = await Freelancer.find({ role: "freelancer" });
+
   res.json(freelancers);
 });
 
