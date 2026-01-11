@@ -212,15 +212,16 @@ const { Server } = require("socket.io");
 
 const server = http.createServer(app);
 
-app.use(
-  cors({
+const io = new Server(server, {
+  cors: {
     origin: [
       "http://localhost:5173",
       "https://skill-to-earn-frontend.onrender.com",
     ],
+    methods: ["GET", "POST"],
     credentials: true,
-  })
-);
+  },
+});
 
 app.post("/api/chats/start", auth, async (req, res) => {
   const { taskId, freelancerId } = req.body;
