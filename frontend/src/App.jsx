@@ -26,36 +26,39 @@ function App() {
     }
   }, []);
 
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
   return (
     <>
       <Navbar user={user} setUser={setUser} />
       <div className="app-layout">
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/freelancers" element={<Freelancers />} />
-        <Route path="/tasks" element={<Tasks user={user} />} />
-        <Route
-          path="/post-task"
-          element={
-            <ProtectedRoute user={user} allowedRole="recruiter">
-              <PostTask />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/not-authorized" element={<NotAuthorized />} />
-        <Route
-          path="/recruiter/tasks"
-          element={<RecruiterTasks user={user} />}
-        />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/freelancers" element={<Freelancers />} />
+          <Route path="/tasks" element={<Tasks user={user} />} />
+          <Route
+            path="/post-task"
+            element={
+              <ProtectedRoute user={user} allowedRole="recruiter">
+                <PostTask />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/not-authorized" element={<NotAuthorized />} />
+          <Route
+            path="/recruiter/tasks"
+            element={<RecruiterTasks user={user} />}
+          />
 
-        <Route path="/signup" element={<Signup setUser={setUser} />} />
-        <Route path="/login" element={<Login setUser={setUser} />} />
-        <Route path="/chat/:id" element={<Chat user={user} />} />
-        <Route path="/freelancer/chats" element={<FreelancerChats />} />
-        <Route path="/recruiter/chats" element={<RecruiterChats />} />
-        <Route path="/freelancer/applied-tasks" element={<AppliedTasks />} />
-      </Routes>
+          <Route path="/signup" element={<Signup setUser={setUser} />} />
+          <Route path="/login" element={<Login setUser={setUser} />} />
+          <Route path="/chat/:id" element={<Chat user={user} />} />
+          <Route path="/freelancer/chats" element={<FreelancerChats />} />
+          <Route path="/recruiter/chats" element={<RecruiterChats />} />
+          <Route path="/freelancer/applied-tasks" element={<AppliedTasks />} />
+        </Routes>
       </div>
     </>
   );
