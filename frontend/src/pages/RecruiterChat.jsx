@@ -39,7 +39,7 @@ function RecruiterChats() {
         onClick={() => navigate(`/chat/${chat._id}`)}
       >
         <p className="inbox-line">
-          <strong>Task:</strong> {chat.task.title}
+          <strong>Task:</strong> {chat.task?.title || "Deleted task"}
         </p>
         <p className="inbox-line">
           <strong>Freelancer:</strong> {chat.freelancer.name}
